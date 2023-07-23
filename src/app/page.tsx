@@ -1,91 +1,106 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+"use client";
 
-const inter = Inter({ subsets: ['latin'] })
+import { Inter } from "next/font/google";
+import styles from "./page.module.css";
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
+import React from "react";
+
+type MyValue = {
+  id: number;
+  name: string;
+  value: number;
+  group: string;
+};
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const v: MyValue[] = [
+    { id: 1, name: "John", value: 45, group: "A" },
+    { id: 2, name: "Sarah", value: 72, group: "B" },
+    { id: 3, name: "David", value: 17, group: "A" },
+    { id: 4, name: "Emily", value: 94, group: "C" },
+    { id: 5, name: "Michael", value: 28, group: "B" },
+    { id: 6, name: "Jessica", value: 62, group: "C" },
+    { id: 7, name: "Andrew", value: 39, group: "A" },
+    { id: 8, name: "Grace", value: 81, group: "B" },
+    { id: 9, name: "Anthony", value: 12, group: "A" },
+    { id: 10, name: "Rachel", value: 76, group: "C" },
+    { id: 11, name: "Thomas", value: 55, group: "B" },
+    { id: 12, name: "Olivia", value: 89, group: "A" },
+    { id: 13, name: "Daniel", value: 33, group: "C" },
+    { id: 14, name: "Madison", value: 70, group: "B" },
+    { id: 15, name: "Nicholas", value: 25, group: "A" },
+    { id: 16, name: "Lauren", value: 60, group: "C" },
+    { id: 17, name: "Christopher", value: 47, group: "B" },
+    { id: 18, name: "Ava", value: 97, group: "A" },
+    { id: 19, name: "Tyler", value: 20, group: "C" },
+    { id: 20, name: "Sophia", value: 84, group: "B" },
+  ];
+
+  const limit = 10;
+  const [rows, setRows] = React.useState<MyValue[]>(v.slice(0, limit));
+
+  const handleChange = (page: number) => {
+    const start = limit * page;
+    const end = start + limit;
+    setRows(v.slice(start, end));
+  };
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
+      <div>
         <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          {rows && (
+            <TableContainer component={Paper}>
+              <Table
+                sx={{ minWidth: 650 }}
+                size="small"
+                aria-label="a dense table"
+              >
+                <TableBody>
+                  {rows.map((row: MyValue) => (
+                    <TableRow
+                      key={row.group}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{row.id}</TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.value}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button
+            variant="text"
+            onClick={() => {
+              handleChange(0);
+            }}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            First
+          </Button>
+          <Button
+            variant="text"
+            onClick={() => {
+              handleChange(1);
+            }}
+          >
+            Second
+          </Button>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
       </div>
     </main>
-  )
+  );
 }
