@@ -69,7 +69,7 @@ export default function Home() {
                 <TableBody>
                   {rows.map((row: MyValue) => (
                     <TableRow
-                      key={row.group}
+                      key={row.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell>{row.id}</TableCell>
